@@ -1,0 +1,1153 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Clínica Alencar — Sua Melhor Versão Começa Aqui</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500&family=DM+Sans:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --sand:     #F2EDE6;
+  --sand-l:   #FAF8F4;
+  --sand-d:   #E0D8CE;
+  --gold:     #C9A84C;
+  --gold-l:   #E0C06A;
+  --gold-d:   #A07830;
+  --ink:      #1E1A14;
+  --ink-mid:  #4A4030;
+  --ink-lite: #8A8070;
+  --white:    #FEFCF9;
+  --border:   rgba(201,168,76,.15);
+  --border-s: rgba(30,26,20,.08);
+}
+
+html { background: var(--sand-l); scroll-behavior: smooth; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--sand-l);
+  color: var(--ink);
+  overflow-x: hidden;
+  cursor: none;
+}
+
+/* ══ CURSOR ══ */
+#cur {
+  position: fixed; z-index: 9999; pointer-events: none;
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--gold);
+  transform: translate(-50%,-50%);
+  transition: width .2s, height .2s, background .2s;
+}
+#cur-ring {
+  position: fixed; z-index: 9998; pointer-events: none;
+  width: 30px; height: 30px; border-radius: 50%;
+  border: 1px solid rgba(201,168,76,.4);
+  transform: translate(-50%,-50%);
+  transition: left .12s ease, top .12s ease, width .3s, height .3s;
+}
+body.hov #cur { width: 12px; height: 12px; }
+body.hov #cur-ring { width: 46px; height: 46px; border-color: var(--gold); }
+
+/* ══ NAV ══ */
+nav {
+  position: fixed; top: 0; width: 100%; z-index: 200;
+  height: 64px;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 60px;
+  background: rgba(250,248,244,.96);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border-s);
+  transition: box-shadow .3s;
+}
+nav.scrolled { box-shadow: 0 4px 32px rgba(30,26,20,.06); }
+.nav-logo {
+  display: flex; align-items: center; gap: 12px; text-decoration: none;
+}
+.nav-logo-icon {
+  width: 34px; height: 34px;
+  border: 1.5px solid var(--gold);
+  display: flex; align-items: center; justify-content: center;
+}
+.nav-logo-a {
+  font-family: 'Playfair Display', serif;
+  font-size: 18px; font-weight: 400; color: var(--gold); line-height: 1;
+}
+.nav-logo-text {
+  display: flex; flex-direction: column; line-height: 1;
+}
+.nav-logo-main {
+  font-family: 'Playfair Display', serif;
+  font-size: 15px; font-weight: 500; letter-spacing: 3px; text-transform: uppercase;
+  color: var(--ink);
+}
+.nav-logo-sub {
+  font-size: 9px; font-weight: 300; letter-spacing: 2px; text-transform: uppercase;
+  color: var(--ink-lite); margin-top: 2px;
+}
+.nav-links { display: flex; gap: 32px; list-style: none; }
+.nav-links a {
+  font-size: 11px; font-weight: 300; letter-spacing: 2px; text-transform: uppercase;
+  color: var(--ink-mid); text-decoration: none; transition: color .2s; cursor: none;
+}
+.nav-links a:hover { color: var(--gold); }
+.nav-cta {
+  background: var(--ink); color: var(--sand-l);
+  padding: 11px 26px;
+  font-size: 11px; font-weight: 300; letter-spacing: 2px; text-transform: uppercase;
+  cursor: none; text-decoration: none;
+  transition: all .25s;
+}
+.nav-cta:hover { background: var(--gold); color: var(--ink); }
+
+/* ══ HERO ══ */
+.hero {
+  min-height: 100vh;
+  display: grid; grid-template-columns: 55% 45%;
+  padding-top: 64px; position: relative; overflow: hidden;
+}
+.hero-left {
+  padding: 80px 60px 80px 60px;
+  display: flex; flex-direction: column; justify-content: center;
+  background: var(--sand-l);
+  position: relative;
+}
+/* Decorative A watermark */
+.hero-watermark {
+  position: absolute; right: -4%; bottom: -8%;
+  font-family: 'Playfair Display', serif;
+  font-size: 40vw; font-weight: 700; color: rgba(201,168,76,.04);
+  pointer-events: none; user-select: none; line-height: 1; letter-spacing: -8px;
+}
+.hero-right {
+  background: var(--sand);
+  position: relative; overflow: hidden;
+  display: flex; align-items: stretch;
+}
+/* Gradient overlay on right */
+.hero-right::before {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(201,168,76,.08) 0%, transparent 50%),
+              radial-gradient(ellipse at 80% 20%, rgba(201,168,76,.12) 0%, transparent 60%);
+  z-index: 1;
+}
+
+/* Pill badge */
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(201,168,76,.1); border: 1px solid var(--border);
+  padding: 7px 16px; margin-bottom: 28px;
+  width: fit-content;
+  animation: fUp .5s ease .1s both;
+}
+.hero-badge-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--gold); animation: pulse 2s ease-in-out infinite; }
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(.8)} }
+.hero-badge-text {
+  font-size: 10px; font-weight: 300; letter-spacing: 2.5px; text-transform: uppercase;
+  color: var(--gold-d);
+}
+
+.hero-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(42px, 4.5vw, 68px);
+  font-weight: 400; line-height: 1.05; letter-spacing: -.5px;
+  color: var(--ink); margin-bottom: 20px;
+  animation: fUp .6s ease .2s both;
+}
+.hero-title em { font-style: italic; color: var(--gold-d); }
+.hero-title .ln { display: block; }
+
+.hero-desc {
+  font-size: 15px; font-weight: 300; line-height: 1.85;
+  color: var(--ink-mid); max-width: 440px; margin-bottom: 40px;
+  animation: fUp .6s ease .35s both;
+}
+.hero-desc strong { color: var(--ink); font-weight: 400; }
+
+.hero-actions {
+  display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 48px;
+  animation: fUp .6s ease .5s both;
+}
+.btn-dark {
+  background: var(--ink); color: var(--sand-l);
+  padding: 15px 36px;
+  font-size: 11px; font-weight: 300; letter-spacing: 2px; text-transform: uppercase;
+  cursor: none; text-decoration: none; display: inline-block;
+  transition: all .25s;
+}
+.btn-dark:hover { background: var(--gold); color: var(--ink); transform: translateY(-1px); box-shadow: 0 8px 24px rgba(201,168,76,.3); }
+.btn-outline-d {
+  background: transparent; border: 1px solid rgba(30,26,20,.2);
+  color: var(--ink-mid);
+  padding: 14px 28px;
+  font-size: 11px; font-weight: 300; letter-spacing: 2px; text-transform: uppercase;
+  text-decoration: none; cursor: none; display: inline-block;
+  transition: all .25s;
+}
+.btn-outline-d:hover { border-color: var(--gold); color: var(--gold-d); }
+
+/* Hero stats */
+.hero-stats {
+  display: flex; gap: 32px; flex-wrap: wrap;
+  padding-top: 32px; border-top: 1px solid var(--border-s);
+  animation: fUp .6s ease .65s both;
+}
+.hs-item { }
+.hs-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 34px; font-weight: 400; color: var(--gold-d); line-height: 1;
+}
+.hs-lbl { font-size: 11px; font-weight: 300; color: var(--ink-lite); margin-top: 2px; letter-spacing: .5px; }
+
+/* Hero right — visual grid */
+.hero-visual-grid {
+  position: relative; z-index: 2;
+  display: grid; grid-template-rows: 1fr 1fr;
+  width: 100%;
+}
+.hv-top {
+  background: var(--sand-d);
+  display: flex; align-items: center; justify-content: center;
+  padding: 40px;
+  border-bottom: 1px solid rgba(201,168,76,.15);
+}
+.hv-quote {
+  font-family: 'Playfair Display', serif;
+  font-size: 24px; font-weight: 400; font-style: italic;
+  color: var(--ink); line-height: 1.4; text-align: center;
+}
+.hv-quote .author {
+  display: block; margin-top: 16px;
+  font-family: 'DM Sans', sans-serif;
+  font-style: normal; font-size: 10px; font-weight: 300;
+  letter-spacing: 2.5px; text-transform: uppercase; color: var(--ink-lite);
+}
+.hv-quote .author em { color: var(--gold); font-style: normal; }
+.hv-bottom {
+  background: var(--ink);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  padding: 40px; gap: 20px;
+}
+.hv-logo-big {
+  font-family: 'Playfair Display', serif;
+  font-size: 72px; font-weight: 700; color: var(--gold);
+  line-height: 1; opacity: .9;
+}
+.hv-tagline {
+  font-size: 10px; font-weight: 300; letter-spacing: 4px; text-transform: uppercase;
+  color: rgba(242,237,230,.3);
+}
+.hv-pills { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
+.hv-pill {
+  background: rgba(201,168,76,.12); border: 1px solid rgba(201,168,76,.25);
+  padding: 5px 14px;
+  font-size: 10px; font-weight: 300; letter-spacing: 1.5px; text-transform: uppercase;
+  color: rgba(201,168,76,.7);
+}
+
+/* ══ TICKER ══ */
+.ticker { background: var(--gold); padding: 11px 0; overflow: hidden; }
+.ticker-track { display: flex; animation: tScroll 24s linear infinite; width: max-content; }
+.ticker-item {
+  display: flex; align-items: center; gap: 10px; padding: 0 24px;
+  white-space: nowrap;
+  font-size: 11px; font-weight: 300; letter-spacing: 2px; text-transform: uppercase;
+  color: rgba(30,26,20,.65);
+}
+.ts { color: rgba(30,26,20,.25); }
+@keyframes tScroll { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+/* ══ POR QUE PERSONALIZAR ══ */
+.porq {
+  padding: 120px 60px;
+  background: var(--white);
+  position: relative; overflow: hidden;
+}
+.porq-bg {
+  position: absolute; right: -6%; top: -15%;
+  font-family: 'Playfair Display', serif;
+  font-size: 32vw; font-weight: 700; color: rgba(201,168,76,.04);
+  pointer-events: none; user-select: none; line-height: 1; letter-spacing: -8px;
+}
+
+.pq-header { max-width: 600px; margin-bottom: 72px; }
+.sec-eyebrow {
+  font-size: 10px; font-weight: 300; letter-spacing: 3px; text-transform: uppercase;
+  color: var(--gold-d); margin-bottom: 12px;
+  display: flex; align-items: center; gap: 10px;
+}
+.sec-eyebrow::before { content: ''; width: 24px; height: 1px; background: var(--gold); }
+.sec-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(32px, 3.5vw, 52px); font-weight: 400; line-height: 1.05;
+  color: var(--ink); margin-bottom: 12px;
+}
+.sec-title em { font-style: italic; color: var(--gold-d); }
+.sec-sub { font-size: 14px; font-weight: 300; line-height: 1.85; color: var(--ink-mid); }
+
+.pq-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1px; background: var(--border-s); }
+.pq-card {
+  background: var(--sand-l); padding: 44px 36px;
+  position: relative; transition: background .3s; cursor: none; overflow: hidden;
+}
+.pq-card:hover { background: var(--white); }
+.pq-card::after {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  transform: scaleX(0); transition: transform .4s ease;
+}
+.pq-card:hover::after { transform: scaleX(1); }
+.pq-icon { font-size: 32px; margin-bottom: 16px; }
+.pq-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 52px; font-weight: 400; color: rgba(201,168,76,.15);
+  line-height: 1; position: absolute; top: 24px; right: 28px; letter-spacing: -2px;
+}
+.pq-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px; font-weight: 500; color: var(--ink); margin-bottom: 10px;
+}
+.pq-desc { font-size: 13px; font-weight: 300; line-height: 1.8; color: var(--ink-mid); }
+.pq-tag {
+  display: inline-block; margin-top: 16px;
+  font-size: 10px; font-weight: 300; letter-spacing: 2px; text-transform: uppercase;
+  color: var(--gold-d);
+}
+
+/* ══ PROTOCOLO PERSONALIZADO — ELEMENTO INTERATIVO ══ */
+.protocolo {
+  padding: 120px 60px;
+  background: var(--ink);
+  position: relative; overflow: hidden;
+}
+.protocolo::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 20% 50%, rgba(201,168,76,.06) 0%, transparent 50%),
+              radial-gradient(ellipse at 80% 30%, rgba(201,168,76,.04) 0%, transparent 40%);
+}
+.protocolo .sec-eyebrow { color: rgba(201,168,76,.6); }
+.protocolo .sec-eyebrow::before { background: rgba(201,168,76,.4); }
+.protocolo .sec-title { color: var(--sand-l); }
+.protocolo .sec-sub { color: rgba(242,237,230,.45); }
+
+.prot-layout {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 80px;
+  margin-top: 64px; align-items: start; position: relative; z-index: 1;
+}
+
+/* Quiz */
+.quiz-wrap { }
+.quiz-step { display: none; }
+.quiz-step.active { display: block; animation: fUp .4s ease both; }
+
+.q-label {
+  font-size: 10px; font-weight: 300; letter-spacing: 3px; text-transform: uppercase;
+  color: rgba(201,168,76,.5); margin-bottom: 8px;
+}
+.q-question {
+  font-family: 'Playfair Display', serif;
+  font-size: 26px; font-weight: 400; color: var(--sand-l); margin-bottom: 28px; line-height: 1.2;
+}
+.q-question em { font-style: italic; color: var(--gold-l); }
+.q-opts { display: flex; flex-direction: column; gap: 10px; }
+.q-opt {
+  padding: 16px 20px;
+  background: rgba(242,237,230,.04); border: 1px solid rgba(201,168,76,.15);
+  display: flex; align-items: flex-start; gap: 12px;
+  cursor: none; transition: all .2s; user-select: none;
+}
+.q-opt:hover { background: rgba(201,168,76,.08); border-color: rgba(201,168,76,.35); }
+.q-opt.selected { background: rgba(201,168,76,.12); border-color: var(--gold); }
+.q-opt-radio {
+  width: 18px; height: 18px; border-radius: 50%;
+  border: 1.5px solid rgba(201,168,76,.3); flex-shrink: 0; margin-top: 2px;
+  transition: all .2s; display: flex; align-items: center; justify-content: center;
+}
+.q-opt.selected .q-opt-radio { border-color: var(--gold); background: var(--gold); }
+.q-opt.selected .q-opt-radio::after { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--ink); }
+.q-opt-text { font-size: 14px; font-weight: 300; color: rgba(242,237,230,.7); line-height: 1.4; }
+.q-opt.selected .q-opt-text { color: var(--sand-l); }
+
+.q-nav { display: flex; align-items: center; gap: 12px; margin-top: 24px; }
+.q-next {
+  background: var(--gold); color: var(--ink);
+  padding: 13px 32px; border: none;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px; font-weight: 400; letter-spacing: 2px; text-transform: uppercase;
+  cursor: none; transition: all .25s;
+}
+.q-next:hover { background: var(--gold-l); }
+.q-next:disabled { background: rgba(201,168,76,.25); color: rgba(201,168,76,.4); cursor: not-allowed; }
+.q-back {
+  background: none; border: none;
+  font-size: 11px; font-weight: 300; letter-spacing: 1.5px; text-transform: uppercase;
+  color: rgba(201,168,76,.35); cursor: none; transition: color .2s;
+}
+.q-back:hover { color: var(--gold); }
+
+/* Progress bar */
+.q-progress { margin-bottom: 36px; }
+.q-prog-track {
+  height: 2px; background: rgba(201,168,76,.1);
+  position: relative; overflow: hidden;
+}
+.q-prog-fill {
+  height: 100%; background: var(--gold);
+  transition: width .4s ease;
+}
+.q-prog-label {
+  font-size: 10px; font-weight: 300; letter-spacing: 1.5px; text-transform: uppercase;
+  color: rgba(201,168,76,.35); margin-top: 8px;
+}
+
+/* Result */
+.prot-result { display: none; }
+.prot-result.show { display: block; animation: fUp .5s ease both; }
+.pr-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 7px 18px; margin-bottom: 20px;
+  background: rgba(201,168,76,.12); border: 1px solid rgba(201,168,76,.3);
+}
+.pr-badge-icon { font-size: 14px; }
+.pr-badge-text {
+  font-size: 10px; font-weight: 300; letter-spacing: 2.5px; text-transform: uppercase;
+  color: rgba(201,168,76,.8);
+}
+.pr-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 32px; font-weight: 500; color: var(--sand-l); margin-bottom: 12px; line-height: 1.1;
+}
+.pr-subtitle { font-size: 13px; font-weight: 300; color: var(--gold); margin-bottom: 16px; letter-spacing: 1px; }
+.pr-desc { font-size: 14px; font-weight: 300; line-height: 1.85; color: rgba(242,237,230,.55); margin-bottom: 24px; }
+.pr-includes { margin-bottom: 28px; }
+.pr-inc-title {
+  font-size: 10px; font-weight: 300; letter-spacing: 2.5px; text-transform: uppercase;
+  color: rgba(201,168,76,.5); margin-bottom: 12px;
+}
+.pr-inc-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 8px 0; border-bottom: 1px solid rgba(201,168,76,.07);
+  font-size: 13px; font-weight: 300; color: rgba(242,237,230,.6);
+}
+.pr-inc-item::before { content: '◆'; color: var(--gold); font-size: 7px; flex-shrink: 0; }
+.pr-cta {
+  background: var(--gold); color: var(--ink);
+  padding: 16px 36px; text-decoration: none;
+  font-size: 11px; font-weight: 400; letter-spacing: 2px; text-transform: uppercase;
+  display: inline-block; transition: all .25s; cursor: none;
+}
+.pr-cta:hover { background: var(--gold-l); transform: translateY(-1px); box-shadow: 0 8px 28px rgba(201,168,76,.3); }
+.pr-reset {
+  display: inline-block; margin-left: 14px;
+  font-size: 11px; font-weight: 300; letter-spacing: 1.5px; text-transform: uppercase;
+  color: rgba(201,168,76,.3); cursor: none; background: none; border: none; transition: color .2s;
+}
+.pr-reset:hover { color: var(--gold); }
+
+/* Info side */
+.prot-info { position: sticky; top: 90px; }
+.pi-card {
+  background: rgba(242,237,230,.04); border: 1px solid rgba(201,168,76,.12);
+  padding: 32px; margin-bottom: 16px;
+  position: relative; transition: border-color .3s;
+}
+.pi-card:hover { border-color: rgba(201,168,76,.25); }
+.pi-card::before {
+  content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 2px;
+  background: var(--gold); opacity: .4;
+}
+.pi-icon { font-size: 24px; margin-bottom: 12px; }
+.pi-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 18px; font-weight: 500; color: var(--sand-l); margin-bottom: 8px;
+}
+.pi-desc { font-size: 13px; font-weight: 300; line-height: 1.75; color: rgba(242,237,230,.4); }
+.pi-quote {
+  margin-top: 10px; padding-top: 10px;
+  border-top: 1px solid rgba(201,168,76,.1);
+  font-size: 12px; font-style: italic; font-weight: 300;
+  color: rgba(201,168,76,.5);
+}
+
+/* ══ ÁREAS ══ */
+.areas {
+  padding: 120px 60px;
+  background: var(--sand-l);
+  position: relative; overflow: hidden;
+}
+.areas-bg {
+  position: absolute; left: -4%; bottom: -10%;
+  font-family: 'Playfair Display', serif;
+  font-size: 32vw; font-weight: 700; color: rgba(201,168,76,.04);
+  pointer-events: none; user-select: none; line-height: 1;
+}
+.areas-grid {
+  display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; margin-top: 64px;
+}
+.area-card {
+  background: var(--white); border: 1px solid var(--border-s);
+  padding: 40px 32px;
+  position: relative; overflow: hidden;
+  transition: all .3s; cursor: none;
+}
+.area-card:hover { transform: translateY(-4px); box-shadow: 0 20px 60px rgba(30,26,20,.08); border-color: var(--border); }
+.ac-icon { font-size: 30px; margin-bottom: 16px; }
+.ac-num {
+  position: absolute; top: 20px; right: 24px;
+  font-family: 'Playfair Display', serif;
+  font-size: 44px; font-weight: 700; color: rgba(201,168,76,.08);
+  line-height: 1;
+}
+.ac-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px; font-weight: 500; color: var(--ink); margin-bottom: 10px;
+}
+.ac-desc { font-size: 13px; font-weight: 300; line-height: 1.8; color: var(--ink-mid); margin-bottom: 16px; }
+.ac-tag {
+  font-size: 10px; font-weight: 300; letter-spacing: 2px; text-transform: uppercase;
+  color: var(--gold-d);
+}
+
+/* ══ DEPOIMENTOS ══ */
+.depos {
+  padding: 120px 60px;
+  background: var(--white); overflow: hidden;
+}
+.depo-track-wrap { overflow: hidden; margin-top: 56px; }
+.depo-track {
+  display: flex; gap: 20px;
+  animation: dScroll 32s linear infinite; width: max-content;
+}
+.depo-track:hover { animation-play-state: paused; }
+@keyframes dScroll { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+.depo-card {
+  background: var(--sand-l); border: 1px solid var(--border-s);
+  padding: 36px 32px; width: 340px; flex-shrink: 0;
+  position: relative; transition: border-color .3s; cursor: none;
+}
+.depo-card:hover { border-color: var(--border); }
+.depo-card::before {
+  content: '"';
+  position: absolute; top: 8px; right: 20px;
+  font-family: 'Playfair Display', serif; font-size: 72px; font-weight: 400;
+  color: rgba(201,168,76,.08); line-height: 1;
+}
+.dc-stars { color: var(--gold); font-size: 12px; letter-spacing: 2px; margin-bottom: 14px; }
+.dc-text { font-size: 14px; font-weight: 300; line-height: 1.8; color: var(--ink-mid); font-style: italic; margin-bottom: 20px; }
+.dc-author { display: flex; align-items: center; gap: 8px; }
+.dc-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--gold); }
+.dc-name { font-size: 12px; font-weight: 400; color: var(--ink); }
+.dc-proc { font-size: 11px; font-weight: 300; color: var(--gold-d); margin-top: 1px; }
+
+/* ══ CTA FINAL ══ */
+.cta-final {
+  padding: 120px 60px;
+  background: var(--sand);
+  text-align: center; position: relative; overflow: hidden;
+}
+.cta-final::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at center, rgba(201,168,76,.12) 0%, transparent 60%);
+  pointer-events: none;
+}
+.cta-bg-a {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+  font-family: 'Playfair Display', serif; font-size: 50vw; font-weight: 700;
+  color: rgba(201,168,76,.05); pointer-events: none; user-select: none; line-height: 1;
+}
+.cta-inner { position: relative; z-index: 1; max-width: 600px; margin: 0 auto; }
+.cta-eyebrow {
+  font-size: 10px; font-weight: 300; letter-spacing: 3px; text-transform: uppercase;
+  color: var(--gold-d); margin-bottom: 12px;
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+}
+.cta-eyebrow::before, .cta-eyebrow::after { content: ''; width: 24px; height: 1px; background: var(--gold); }
+.cta-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(40px, 6vw, 72px); font-weight: 400; line-height: 1;
+  color: var(--ink); margin-bottom: 18px; letter-spacing: -.5px;
+}
+.cta-title em { font-style: italic; color: var(--gold-d); }
+.cta-sub { font-size: 15px; font-weight: 300; color: var(--ink-mid); line-height: 1.8; margin-bottom: 48px; }
+.cta-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+.cta-addr {
+  margin-top: 44px; padding-top: 28px;
+  border-top: 1px solid rgba(30,26,20,.08);
+  font-size: 12px; font-weight: 300; color: var(--ink-lite); line-height: 1.8;
+}
+.cta-addr strong { color: var(--ink-mid); font-weight: 400; }
+
+/* ══ FOOTER ══ */
+footer {
+  background: var(--ink);
+  padding: 28px 60px;
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 14px;
+}
+.fl {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px; font-weight: 400; letter-spacing: 2px; text-transform: uppercase;
+  color: rgba(201,168,76,.3);
+}
+.fc { font-size: 11px; font-weight: 300; color: rgba(242,237,230,.2); }
+.flinks { display: flex; gap: 20px; }
+.flinks a { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: rgba(201,168,76,.25); text-decoration: none; transition: color .2s; cursor: none; }
+.flinks a:hover { color: var(--gold); }
+
+/* ══ REVEAL ══ */
+.rv { opacity: 0; transition: opacity .8s ease, transform .8s ease; }
+.rv.fb { transform: translateY(28px); }
+.rv.fl { transform: translateX(-28px); }
+.rv.fr { transform: translateX(28px); }
+.rv.sc { transform: scale(.97); }
+.rv.v  { opacity: 1; transform: none !important; }
+.rv.d1 { transition-delay: .12s; } .rv.d2 { transition-delay: .24s; }
+.rv.d3 { transition-delay: .36s; } .rv.d4 { transition-delay: .48s; }
+@keyframes fUp { from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:translateY(0)} }
+
+/* ══ RESPONSIVE ══ */
+@media (max-width: 1024px) {
+  nav { padding: 0 24px; }
+  .nav-links { display: none; }
+  .hero { grid-template-columns: 1fr; }
+  .hero-left { padding: 60px 24px 40px; }
+  .hero-right { min-height: 300px; }
+  .hv-top { min-height: 160px; }
+  .porq, .protocolo, .areas, .depos, .cta-final { padding: 80px 24px; }
+  .pq-grid { grid-template-columns: 1fr 1fr; }
+  .prot-layout { grid-template-columns: 1fr; gap: 48px; }
+  .prot-info { position: static; }
+  .areas-grid { grid-template-columns: 1fr 1fr; }
+  footer { padding: 24px; flex-direction: column; text-align: center; }
+}
+@media (max-width: 600px) {
+  .hero-title { font-size: clamp(36px, 11vw, 52px); }
+  .hero-actions { flex-direction: column; }
+  .pq-grid { grid-template-columns: 1fr; }
+  .areas-grid { grid-template-columns: 1fr; }
+  .cta-btns { flex-direction: column; align-items: center; }
+}
+</style>
+</head>
+<body>
+
+<div id="cur"></div>
+<div id="cur-ring"></div>
+
+<!-- NAV -->
+<nav id="nav">
+  <a class="nav-logo" href="#">
+    <div class="nav-logo-icon"><span class="nav-logo-a">A</span></div>
+    <div class="nav-logo-text">
+      <span class="nav-logo-main">Alencar</span>
+      <span class="nav-logo-sub">Clínica · Campo Grande</span>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#protocolo">Protocolo</a></li>
+    <li><a href="#areas">Especialidades</a></li>
+    <li><a href="#cta">Contato</a></li>
+  </ul>
+  <a href="https://wa.me/message/546B5JFHFTKGA1" class="nav-cta" target="_blank">Agendar consulta</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-watermark">A</div>
+    <div class="hero-badge">
+      <div class="hero-badge-dot"></div>
+      <span class="hero-badge-text">Campo Grande, MS · Clínica verificada</span>
+    </div>
+    <h1 class="hero-title">
+      <span class="ln">O protocolo</span>
+      <span class="ln"><em>do seu amigo</em></span>
+      <span class="ln">não vai funcionar</span>
+      <span class="ln">para você.</span>
+    </h1>
+    <p class="hero-desc">
+      Emagrecimento, saúde hormonal e lipedema exigem <strong>abordagem individualizada</strong>. Na Clínica Alencar, seu protocolo começa com ciência — e termina com resultado real.
+    </p>
+    <div class="hero-actions">
+      <a href="#protocolo" class="btn-dark">Descobrir meu protocolo →</a>
+      <a href="https://wa.me/message/546B5JFHFTKGA1" class="btn-outline-d" target="_blank">Falar agora</a>
+    </div>
+    <div class="hero-stats">
+      <div class="hs-item">
+        <div class="hs-num">3</div>
+        <div class="hs-lbl">Especialidades</div>
+      </div>
+      <div class="hs-item">
+        <div class="hs-num">100%</div>
+        <div class="hs-lbl">Protocolos individuais</div>
+      </div>
+      <div class="hs-item">
+        <div class="hs-num">MS</div>
+        <div class="hs-lbl">Campo Grande</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="hero-visual-grid">
+      <div class="hv-top">
+        <div class="hv-quote">
+          "Resultados duradouros começam com acompanhamento adequado."
+          <span class="author">— <em>Clínica Alencar</em> · Sua melhor versão</span>
+        </div>
+      </div>
+      <div class="hv-bottom">
+        <div class="hv-logo-big">A</div>
+        <div class="hv-tagline">Sua melhor versão começa aqui</div>
+        <div class="hv-pills">
+          <div class="hv-pill">Emagrecimento</div>
+          <div class="hv-pill">Hormonal</div>
+          <div class="hv-pill">Lipedema</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-track">
+    <div class="ticker-item">Emagrecimento <span class="ts">◆</span></div>
+    <div class="ticker-item">Saúde Hormonal <span class="ts">◆</span></div>
+    <div class="ticker-item">Lipedema <span class="ts">◆</span></div>
+    <div class="ticker-item">Protocolos Individuais <span class="ts">◆</span></div>
+    <div class="ticker-item">Mounjaro · Tirzepatida <span class="ts">◆</span></div>
+    <div class="ticker-item">Teste Genético <span class="ts">◆</span></div>
+    <div class="ticker-item">Vitamina B12 <span class="ts">◆</span></div>
+    <div class="ticker-item">Sua Melhor Versão <span class="ts">◆</span></div>
+    <div class="ticker-item">Emagrecimento <span class="ts">◆</span></div>
+    <div class="ticker-item">Saúde Hormonal <span class="ts">◆</span></div>
+    <div class="ticker-item">Lipedema <span class="ts">◆</span></div>
+    <div class="ticker-item">Protocolos Individuais <span class="ts">◆</span></div>
+    <div class="ticker-item">Mounjaro · Tirzepatida <span class="ts">◆</span></div>
+    <div class="ticker-item">Teste Genético <span class="ts">◆</span></div>
+    <div class="ticker-item">Vitamina B12 <span class="ts">◆</span></div>
+    <div class="ticker-item">Sua Melhor Versão <span class="ts">◆</span></div>
+  </div>
+</div>
+
+<!-- POR QUE PERSONALIZAR -->
+<section class="porq rv fb">
+  <div class="porq-bg">A</div>
+  <div class="pq-header">
+    <div class="sec-eyebrow rv fb">Por que importa</div>
+    <h2 class="sec-title rv fb d1">Copiar não funciona.<br><em>Entender funciona.</em></h2>
+    <p class="sec-sub rv fb d2">Seu corpo tem uma história única — hormônios, genética, metabolismo, hábitos. Um protocolo eficaz começa por entender essa história antes de propor qualquer solução.</p>
+  </div>
+  <div class="pq-grid">
+    <div class="pq-card rv sc">
+      <div class="pq-num">01</div>
+      <div class="pq-icon">🧬</div>
+      <div class="pq-title">Genética individual</div>
+      <div class="pq-desc">O teste genético revela como seu corpo processa nutrientes, responde ao exercício e metaboliza hormônios. O que funciona para alguém pode travar seu progresso.</div>
+      <div class="pq-tag">Teste genético disponível →</div>
+    </div>
+    <div class="pq-card rv sc d1">
+      <div class="pq-num">02</div>
+      <div class="pq-icon">⚡</div>
+      <div class="pq-title">Saúde hormonal</div>
+      <div class="pq-desc">Cansaço extremo pode ser falta de vitamina B12. Dificuldade para emagrecer pode ser resistência hormonal. Sintomas têm causas — e causas têm soluções específicas.</div>
+      <div class="pq-tag">Avaliação hormonal →</div>
+    </div>
+    <div class="pq-card rv sc d2">
+      <div class="pq-num">03</div>
+      <div class="pq-icon">📊</div>
+      <div class="pq-title">Acompanhamento real</div>
+      <div class="pq-desc">Resultados duradouros não aparecem com dieta relâmpago ou remédio do momento. Aparecem com protocolo ajustado, exames periódicos e médico presente.</div>
+      <div class="pq-tag">Protocolo de longo prazo →</div>
+    </div>
+  </div>
+</section>
+
+<!-- PROTOCOLO PERSONALIZADO — ELEMENTO INTERATIVO -->
+<section class="protocolo rv fb" id="protocolo">
+  <div class="sec-eyebrow rv fb">Ferramenta exclusiva</div>
+  <h2 class="sec-title rv fb d1">Descubra seu<br><em>protocolo ideal.</em></h2>
+  <p class="sec-sub rv fb d2">4 perguntas. Seu protocolo de partida — individualizado pelo que você está vivendo agora.</p>
+
+  <div class="prot-layout">
+    <!-- Quiz -->
+    <div class="quiz-wrap rv fl d1">
+      <div class="q-progress">
+        <div class="q-prog-track"><div class="q-prog-fill" id="q-fill" style="width:25%"></div></div>
+        <div class="q-prog-label" id="q-prog-lbl">Pergunta 1 de 4</div>
+      </div>
+
+      <!-- P1: Objetivo -->
+      <div class="quiz-step active" id="step-1">
+        <div class="q-label">Objetivo principal</div>
+        <div class="q-question">Qual é o seu maior <em>objetivo</em> hoje?</div>
+        <div class="q-opts">
+          <div class="q-opt" data-q="1" data-v="emagrecer" onclick="selectOpt(this)">
+            <div class="q-opt-radio"></div>
+            <div class="q-opt-text">Emagrecer com saúde e manter o peso</div>
+          </div>
+          <div class="q-opt" data-q="1" data-v="hormonal" onclick="selectOpt(this)">
+            <div class="q-opt-radio"></div>
+            <div class="q-opt-text">Equilibrar hormônios e recuperar energia</div>
+          </div>
+          <div class="q-opt" data-q="1" data-v="lipedema" onclick="selectOpt(this)">
+            <div class="q-opt-radio"></div>
+            <div class="q-opt-text">Tratar lipedema e reduzir dor e inchaço</div>
+          </div>
+          <div class="q-opt" data-q="1" data-v="geral" onclick="selectOpt(this)">
+            <div class="q-opt-radio"></div>
+            <div class="q-opt-text">Cuidar da saúde geral e prevenir doenças</div>
+          </div>
+        </div>
+        <div class="q-nav">
+          <button class="q-next" id="next-1" disabled onclick="goStep(2)">Próximo →</button>
+        </div>
+      </div>
+
+      <!-- P2: Maior dificuldade -->
+      <div class="quiz-step" id="step-2">
+        <div class="q-label">Maior obstáculo</div>
+        <div class="q-question">Qual é sua <em>maior dificuldade</em> atualmente?</div>
+        <div class="q-opts">
+          <div class="q-opt" data-q="2" data-v="cansaco" onclick="selectOpt(this)">
+            <div class="q-opt-radio"></div>
+            <div class="q-opt-text">Cansaço extremo e falta de disposição</div>
+          </div>
+          <div class="q-opt" data-q="2" data-v="platô" onclick="selectOpt(this)">
+            <div class="q-opt-radio"></div>
+            <div class="q-opt-text">Como pouco e não emagreço — platô</div>
+          </div>
+          <div class="q-opt" data-q="2" data-v="reganho" onclick="selectOpt(this)">
+            <div class="q-opt-radio"></div>
+            <div class="q-opt-text">Emagreço e reganho sempre — efeito sanfona</div>
+          </div>
+          <div class="q-opt" data-q="2" data-v="dor" onclick="selectOpt(this)">
+            <div class="q-opt-radio"></div>
+            <div class="q-opt-text">Dor, inchaço ou dificuldade de movimento</div>
+          </div>
+        </div>
+        <div class="q-nav">
+          <button class="q-next" id="next-2" disabled onclick="goStep(3)">Próximo →</button>
+          <button class="q-back" onclick="goStep(1)">← Voltar</button>
+        </div>
+      </div>
+
+      <!-- P3: Tentativas anteriores -->
+      <div class="quiz-step" id="step-3">
+        <div class="q-label">Histórico</div>
+        <div class="q-question">O que você <em>já tentou</em> antes?</div>
+        <div class="q-opts">
+          <div class="q-opt" data-q="3" data-v="dietas" onclick="selectOpt(this)">
+            <div class="q-opt-radio"></div>
+            <div class="q-opt-text">Dietas populares e restrição calórica intensa</div>
+          </div>
+          <div class="q-opt" data-q="3" data-v="remédios" onclick="selectOpt(this)">
+            <div class="q-opt-radio"></div>
+            <div class="q-opt-text">Remédios ou suplementos sem acompanhamento</div>
+          </div>
+          <div class="q-opt" data-q="3" data-v="outros" onclick="selectOpt(this)">
+            <div class="q-opt-radio"></div>
+            <div class="q-opt-text">Protocolo copiado de amigos ou redes sociais</div>
+          </div>
+          <div class="q-opt" data-q="3" data-v="nada" onclick="selectOpt(this)">
+            <div class="q-opt-radio"></div>
+            <div class="q-opt-text">Ainda não tentei nada — é minha primeira vez</div>
+          </div>
+        </div>
+        <div class="q-nav">
+          <button class="q-next" id="next-3" disabled onclick="goStep(4)">Próximo →</button>
+          <button class="q-back" onclick="goStep(2)">← Voltar</button>
+        </div>
+      </div>
+
+      <!-- P4: Perfil -->
+      <div class="quiz-step" id="step-4">
+        <div class="q-label">Perfil</div>
+        <div class="q-question">Como você se <em>descreveria</em> hoje?</div>
+        <div class="q-opts">
+          <div class="q-opt" data-q="4" data-v="mulher-40" onclick="selectOpt(this)">
+            <div class="q-opt-radio"></div>
+            <div class="q-opt-text">Mulher acima dos 40 — menopausa ou perimenopausa</div>
+          </div>
+          <div class="q-opt" data-q="4" data-v="jovem" onclick="selectOpt(this)">
+            <div class="q-opt-radio"></div>
+            <div class="q-opt-text">Adulto jovem que quer mudar hábitos agora</div>
+          </div>
+          <div class="q-opt" data-q="4" data-v="atleta" onclick="selectOpt(this)">
+            <div class="q-opt-radio"></div>
+            <div class="q-opt-text">Pratico exercícios mas não vejo resultado</div>
+          </div>
+          <div class="q-opt" data-q="4" data-v="sedentario" onclick="selectOpt(this)">
+            <div class="q-opt-radio"></div>
+            <div class="q-opt-text">Sedentário e quero começar do zero com segurança</div>
+          </div>
+        </div>
+        <div class="q-nav">
+          <button class="q-next" id="next-4" disabled onclick="calcProtocolo()">Ver meu protocolo →</button>
+          <button class="q-back" onclick="goStep(3)">← Voltar</button>
+        </div>
+      </div>
+
+      <!-- Resultado -->
+      <div class="prot-result" id="prot-result">
+        <div class="pr-badge">
+          <span class="pr-badge-icon" id="pr-icon">🎯</span>
+          <span class="pr-badge-text" id="pr-badge-text">Protocolo identificado</span>
+        </div>
+        <div class="pr-title" id="pr-title">—</div>
+        <div class="pr-subtitle" id="pr-subtitle">—</div>
+        <div class="pr-desc" id="pr-desc">—</div>
+        <div class="pr-includes">
+          <div class="pr-inc-title">Este protocolo tipicamente inclui:</div>
+          <div id="pr-includes-list"></div>
+        </div>
+        <a class="pr-cta" id="pr-cta" href="#" target="_blank">Agendar minha avaliação →</a>
+        <button class="pr-reset" onclick="resetQuiz()">Refazer →</button>
+      </div>
+    </div>
+
+    <!-- Info cards -->
+    <div class="prot-info rv fr d2">
+      <div class="pi-card">
+        <div class="pi-icon">🧬</div>
+        <div class="pi-title">Teste Genético</div>
+        <div class="pi-desc">Descubra o que seu DNA revela sobre metabolismo, resposta ao exercício e risco hormonal. A base científica do seu protocolo personalizado.</div>
+        <div class="pi-quote">"O teste genético mudou o caminho do meu tratamento." — Paciente Alencar</div>
+      </div>
+      <div class="pi-card">
+        <div class="pi-icon">💊</div>
+        <div class="pi-title">Mounjaro · Tirzepatida</div>
+        <div class="pi-desc">Medicamentos modernos exigem acompanhamento médico especializado. Não é sobre o remédio em si — é sobre o protocolo completo ao redor dele.</div>
+        <div class="pi-quote">"Mounjaro não é cerveja — exige protocolo." — Dr. Alencar</div>
+      </div>
+      <div class="pi-card">
+        <div class="pi-icon">⚡</div>
+        <div class="pi-title">Você não é preguiçosa</div>
+        <div class="pi-desc">Cansaço extremo, falta de foco e dificuldade para emagrecer podem ser sintomas de deficiência de vitamina B12 ou desequilíbrio hormonal — não falta de vontade.</div>
+        <div class="pi-quote">"Sintomas têm causas. Causas têm solução."</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ÁREAS -->
+<section class="areas rv fb" id="areas">
+  <div class="areas-bg">A</div>
+  <div class="sec-eyebrow rv fb">Especialidades</div>
+  <h2 class="sec-title rv fb d1">Três focos.<br><em>Um cuidado.</em></h2>
+  <p class="sec-sub rv fb d2">Abordagem integrada que entende que emagrecimento, hormônios e lipedema frequentemente se influenciam — e precisam ser tratados juntos.</p>
+  <div class="areas-grid">
+    <div class="area-card rv sc">
+      <div class="ac-icon">⚖️</div>
+      <div class="ac-num">01</div>
+      <div class="ac-title">Emagrecimento</div>
+      <div class="ac-desc">Protocolo médico individualizado para quem emagrece e reengorda, quem come pouco e não emagrece, ou quem quer resultado com saúde e ciência. Inclui avaliação metabólica, hormonal e genética.</div>
+      <div class="ac-tag">Protocolo exclusivo →</div>
+    </div>
+    <div class="area-card rv sc d1">
+      <div class="ac-icon">🔬</div>
+      <div class="ac-num">02</div>
+      <div class="ac-title">Saúde Hormonal</div>
+      <div class="ac-desc">Testosterona, vitamina B12, menopausa, perimenopausa — desequilíbrios hormonais afetam peso, humor, energia e qualidade de vida. Diagnóstico preciso, tratamento ajustado.</div>
+      <div class="ac-tag">Avaliação hormonal →</div>
+    </div>
+    <div class="area-card rv sc d2">
+      <div class="ac-icon">🩺</div>
+      <div class="ac-num">03</div>
+      <div class="ac-title">Lipedema</div>
+      <div class="ac-desc">Condição frequentemente confundida com obesidade ou inchaço simples. O lipedema tem diagnóstico próprio, tratamento específico e exige médico experiente para abordagem eficaz.</div>
+      <div class="ac-tag">Diagnóstico especializado →</div>
+    </div>
+  </div>
+</section>
+
+<!-- DEPOIMENTOS -->
+<section class="depos rv fb">
+  <div class="sec-eyebrow rv fb">Pacientes</div>
+  <h2 class="sec-title rv fb d1"><em>Resultados reais.</em><br>Histórias reais.</h2>
+  <div class="depo-track-wrap">
+    <div class="depo-track">
+      <div class="depo-card"><div class="dc-stars">★★★★★</div><div class="dc-text">"Tentei dieta sozinha por anos. Com o protocolo da Clínica Alencar e o acompanhamento, perdi 18kg em 6 meses — e ainda estou emagrecendo."</div><div class="dc-author"><div class="dc-dot"></div><div><div class="dc-name">Renata F.</div><div class="dc-proc">Emagrecimento · Protocolo individualizado</div></div></div></div>
+      <div class="depo-card"><div class="dc-stars">★★★★★</div><div class="dc-text">"Descobri que meu cansaço crônico era deficiência de B12. Em 3 semanas de tratamento já estava outra pessoa. Nunca teria imaginado isso sem a consulta."</div><div class="dc-author"><div class="dc-dot"></div><div><div class="dc-name">Camila R.</div><div class="dc-proc">Saúde hormonal · Vitamina B12</div></div></div></div>
+      <div class="depo-card"><div class="dc-stars">★★★★★</div><div class="dc-text">"Eu achava que era preguiçosa e sem força de vontade. Era lipedema. O diagnóstico correto mudou minha vida — e minha autoestima."</div><div class="dc-author"><div class="dc-dot"></div><div><div class="dc-name">Juliana M.</div><div class="dc-proc">Lipedema · Diagnóstico e tratamento</div></div></div></div>
+      <div class="depo-card"><div class="dc-stars">★★★★★</div><div class="dc-text">"Tinha parado o Mounjaro e não sabia como retomar sem perder o progresso. O Dr. Alencar ajustou o protocolo e foi tranquilo. Atendimento excelente."</div><div class="dc-author"><div class="dc-dot"></div><div><div class="dc-name">Patrícia L.</div><div class="dc-proc">Emagrecimento · Tirzepatida</div></div></div></div>
+      <div class="depo-card"><div class="dc-stars">★★★★★</div><div class="dc-text">"Na menopausa engordei 12kg e pensava que era inevitável. Não é. Com equilíbrio hormonal e protocolo certo, estou no melhor peso dos últimos 10 anos."</div><div class="dc-author"><div class="dc-dot"></div><div><div class="dc-name">Solange T.</div><div class="dc-proc">Saúde hormonal · Menopausa</div></div></div></div>
+      <!-- dup for loop -->
+      <div class="depo-card"><div class="dc-stars">★★★★★</div><div class="dc-text">"Tentei dieta sozinha por anos. Com o protocolo da Clínica Alencar e o acompanhamento, perdi 18kg em 6 meses — e ainda estou emagrecendo."</div><div class="dc-author"><div class="dc-dot"></div><div><div class="dc-name">Renata F.</div><div class="dc-proc">Emagrecimento · Protocolo individualizado</div></div></div></div>
+      <div class="depo-card"><div class="dc-stars">★★★★★</div><div class="dc-text">"Descobri que meu cansaço crônico era deficiência de B12. Em 3 semanas de tratamento já estava outra pessoa. Nunca teria imaginado isso sem a consulta."</div><div class="dc-author"><div class="dc-dot"></div><div><div class="dc-name">Camila R.</div><div class="dc-proc">Saúde hormonal · Vitamina B12</div></div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<section class="cta-final rv fb" id="cta">
+  <div class="cta-bg-a">A</div>
+  <div class="cta-inner">
+    <div class="cta-eyebrow">Sua melhor versão</div>
+    <h2 class="cta-title">Começa<br><em>aqui.</em></h2>
+    <p class="cta-sub">Chega de copiar protocolo que não é seu. Chega de resultados que não duram. A Clínica Alencar entende o seu corpo — e constrói o caminho certo para você.</p>
+    <div class="cta-btns">
+      <a href="https://wa.me/message/546B5JFHFTKGA1" class="btn-dark" target="_blank">Agendar pelo WhatsApp →</a>
+      <a href="#protocolo" class="btn-outline-d">Refazer meu protocolo</a>
+    </div>
+    <div class="cta-addr">
+      <strong>Clínica Alencar</strong> · Campo Grande, MS<br>
+      @alencar.clinica · Emagrecimento · Saúde Hormonal · Lipedema
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="fl">Alencar</div>
+  <div class="fc">Clínica · Campo Grande, MS · © 2025</div>
+  <div class="flinks">
+    <a href="https://wa.me/message/546B5JFHFTKGA1" target="_blank">WhatsApp</a>
+    <a href="https://instagram.com/alencar.clinica" target="_blank">Instagram</a>
+  </div>
+</footer>
+
+<script>
+/* ── CURSOR ── */
+const cur = document.getElementById('cur');
+const ring = document.getElementById('cur-ring');
+let rx=0,ry=0,mx=-100,my=-100;
+document.addEventListener('mousemove', e=>{ mx=e.clientX; my=e.clientY; });
+(function loop(){
+  rx+=(mx-rx)*.12; ry+=(my-ry)*.12;
+  cur.style.left=mx+'px'; cur.style.top=my+'px';
+  ring.style.left=rx+'px'; ring.style.top=ry+'px';
+  requestAnimationFrame(loop);
+})();
+document.querySelectorAll('a,button,.q-opt,.area-card,.pq-card,.pi-card,.depo-card').forEach(el=>{
+  el.addEventListener('mouseenter',()=>document.body.classList.add('hov'));
+  el.addEventListener('mouseleave',()=>document.body.classList.remove('hov'));
+});
+
+/* ── NAV SCROLL ── */
+window.addEventListener('scroll',()=>{
+  document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 40);
+});
+
+/* ── SCROLL REVEAL ── */
+const obs = new IntersectionObserver(e=>{
+  e.forEach(x=>{ if(x.isIntersecting){ x.target.classList.add('v'); obs.unobserve(x.target); } });
+},{threshold:.07,rootMargin:'0px 0px -20px 0px'});
+document.querySelectorAll('.rv').forEach(el=>obs.observe(el));
+
+/* ── PROTOCOLO QUIZ ── */
+const WPP = 'https://wa.me/message/546B5JFHFTKGA1';
+const answers = {};
+
+function selectOpt(el) {
+  const q = el.dataset.q;
+  const v = el.dataset.v;
+  document.querySelectorAll(`.q-opt[data-q="${q}"]`).forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+  answers[q] = v;
+  const nextBtn = document.getElementById(`next-${q}`);
+  if(nextBtn) nextBtn.disabled = false;
+}
+
+function goStep(n) {
+  document.querySelectorAll('.quiz-step').forEach(s => s.classList.remove('active'));
+  const step = document.getElementById(`step-${n}`);
+  if(step) step.classList.add('active');
+  // Progress
+  const pct = (n / 4) * 100;
+  document.getElementById('q-fill').style.width = pct + '%';
+  document.getElementById('q-prog-lbl').textContent = `Pergunta ${n} de 4`;
+}
+
+// Protocol database
+const protocolos = {
+  emagrecer: {
+    icon: '⚖️',
+    badge: 'Protocolo de Emagrecimento Médico',
+    title: 'Protocolo Metabólico Individualizado',
+    subtitle: 'Emagrecimento com ciência · Resultado duradouro',
+    desc: 'Baseado no seu perfil, você precisa de um protocolo que vá além da restrição calórica — investigando sua taxa metabólica, perfil hormonal e resposta genética para criar um plano que funcione especificamente para o seu corpo.',
+    includes: ['Avaliação metabólica e bioquímica completa','Exames hormonais para descartar resistência','Protocolo nutricional individualizado','Possibilidade de suporte medicamentoso (Tirzepatida/Mounjaro)','Acompanhamento mensal com ajuste de protocolo'],
+    msg: 'Olá! Fiz o quiz de protocolo no site e meu resultado foi Protocolo de Emagrecimento Médico. Gostaria de agendar uma avaliação.'
+  },
+  hormonal: {
+    icon: '⚡',
+    badge: 'Protocolo de Saúde Hormonal',
+    title: 'Reequilíbrio Hormonal Personalizado',
+    subtitle: 'Energia · Disposição · Equilíbrio',
+    desc: 'Seus sintomas indicam que o caminho não é apenas emagrecer — é entender o que está desequilibrado hormonalmente. Cansaço, dificuldade de perder peso e variações de humor frequentemente têm causa hormonal tratável.',
+    includes: ['Painel hormonal completo (TSH, testosterona, B12, ferro)','Investigação de resistência à insulina','Avaliação de perimenopausa/menopausa se aplicável','Reposição ou suplementação individualizada','Reavaliação a cada 60 dias'],
+    msg: 'Olá! Fiz o quiz de protocolo no site e meu resultado foi Protocolo de Saúde Hormonal. Gostaria de agendar uma avaliação.'
+  },
+  lipedema: {
+    icon: '🩺',
+    badge: 'Protocolo de Lipedema',
+    title: 'Diagnóstico e Tratamento de Lipedema',
+    subtitle: 'Diagnóstico preciso · Abordagem multidisciplinar',
+    desc: 'O lipedema é frequentemente confundido com obesidade ou simples retenção de líquido. Sua descrição aponta para um quadro que merece diagnóstico diferenciado — e tratamento específico que vai muito além de dieta e exercício.',
+    includes: ['Avaliação clínica para diagnóstico de lipedema','Diferenciação de linfedema e obesidade','Protocolo anti-inflamatório e compressoterapia','Manejo da dor e mobilidade','Acompanhamento integrado e multidisciplinar'],
+    msg: 'Olá! Fiz o quiz de protocolo no site e meu resultado foi Protocolo de Lipedema. Gostaria de agendar uma avaliação diagnóstica.'
+  },
+  geral: {
+    icon: '🌱',
+    badge: 'Protocolo de Saúde Preventiva',
+    title: 'Check-up e Prevenção Personalizada',
+    subtitle: 'Sua melhor versão · Prevenção inteligente',
+    desc: 'Cuidar antes de adoecer é a decisão mais inteligente que existe. Seu perfil indica alguém que quer construir saúde de verdade — com exames, orientação médica e protocolo de longo prazo baseado em ciência.',
+    includes: ['Check-up completo com exames laboratoriais','Avaliação genética para riscos metabólicos','Plano de prevenção individualizado','Orientação sobre suplementação baseada em evidência','Acompanhamento preventivo anual'],
+    msg: 'Olá! Fiz o quiz de protocolo no site e meu resultado foi Protocolo de Saúde Preventiva. Gostaria de agendar uma consulta.'
+  }
+};
+
+function calcProtocolo() {
+  const obj = answers['1'] || 'geral';
+  const dif = answers['2'] || '';
+
+  // Refinamento pelo perfil de dificuldade
+  let key = obj;
+  if(dif === 'cansaco') key = 'hormonal';
+  if(dif === 'dor') key = 'lipedema';
+
+  const p = protocolos[key] || protocolos['geral'];
+
+  document.getElementById('pr-icon').textContent = p.icon;
+  document.getElementById('pr-badge-text').textContent = p.badge;
+  document.getElementById('pr-title').textContent = p.title;
+  document.getElementById('pr-subtitle').textContent = p.subtitle;
+  document.getElementById('pr-desc').textContent = p.desc;
+
+  const list = document.getElementById('pr-includes-list');
+  list.innerHTML = p.includes.map(i => `<div class="pr-inc-item">${i}</div>`).join('');
+
+  const cta = document.getElementById('pr-cta');
+  cta.href = WPP + '?text=' + encodeURIComponent(p.msg);
+
+  // Hide all steps
+  document.querySelectorAll('.quiz-step').forEach(s => s.classList.remove('active'));
+  document.getElementById('q-fill').style.width = '100%';
+  document.getElementById('q-prog-lbl').textContent = 'Protocolo identificado';
+
+  const result = document.getElementById('prot-result');
+  result.classList.remove('show');
+  void result.offsetWidth;
+  result.classList.add('show');
+  result.scrollIntoView({behavior:'smooth', block:'nearest'});
+}
+
+function resetQuiz() {
+  Object.keys(answers).forEach(k => delete answers[k]);
+  document.querySelectorAll('.q-opt').forEach(o => o.classList.remove('selected'));
+  document.querySelectorAll('.q-next').forEach(b => b.disabled = true);
+  document.getElementById('prot-result').classList.remove('show');
+  document.getElementById('q-fill').style.width = '25%';
+  document.getElementById('q-prog-lbl').textContent = 'Pergunta 1 de 4';
+  goStep(1);
+}
+</script>
+</body>
+</html>
